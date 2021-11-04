@@ -1,76 +1,58 @@
+<template>
+  <div class="container">
+
+    <div class="row">
+      <div class="col-12 mb-4">
+        <h2 class="fw-light">Моделирование</h2>
+      </div>
+      <div class="col-2">
+        <div class="list-group list-group-flush">
+          <router-link active-class="active" class="list-group-item list-group-item-action" v-for="contentType in contentTypes"
+                       v-bind:key="contentType.alias"
+                       :to="{ name: 'contentTypeEdit', params: { id: contentType.alias }}">
+            {{ contentType.title }}
+          </router-link>
+        </div>
+      </div>
+      <div class="col-10">
+        <router-view></router-view>
+      </div>
+    </div>
+  </div>
+</template>
+
 <script>
-import {ContentTypeProvider} from '@/provider/contentTypeProvider'
 //import {AttributeType} from "@/model/content/contentType";
 import {seed} from '@/stubs'
+import {useStore} from "vuex";
+import {computed} from "vue";
 
 seed()
 export default {
   name: 'Type',
-  data() {
+  setup() {
+    const store = useStore()
+    store.dispatch('fetchContentTypes')
     return {
-      contentTypes: []
+      contentTypes: computed(() => store.state.contentTypes)
     }
-  },
-  // this.contentTypes = await contentTypeProvider.list()
-  async created() {
-
-    const contentTypeProvider = new ContentTypeProvider()
-
-    const contentTypes = await contentTypeProvider.list()
-
-    this.contentTypes = contentTypes.map(contentType => {
-
-      contentType.attributes = contentType.attributes.map(attr => {
-
-        if (attr.type === 'collection') {
-
-          attr.reference = contentTypes.find(ct => ct.alias === attr.reference) || attr.reference
-        }
-
-        return attr
-      })
-
-      return contentType
-    })
-
-
   }
 }
 </script>
 
-<template>
-  <div class="container">
-    <ul class="list-group">
-      <li class="list-group-item d-flex justify-content-between align-items-start" v-for="contentType in contentTypes"
-          v-bind:key="contentType.alias">
+<style scoped>
+.list-group-flush {
+  border-color: transparent;
+}
 
-        <div class="ms-2 me-auto">
-          <div class="fw-bold">{{ contentType.title }}</div>
-          <div v-for="attribute in contentType.attributes" v-bind:key="attribute.alias">
+.list-group-item-action {
+  border-color: transparent;
+}
 
-            {{ attribute.title }}
-            <span class="badge bg-secondary">{{ attribute.type }}</span>
-
-            <template v-if="attribute.type === 'collection'">
-              <span class="text-muted" v-if="attribute.reference.alias">
-              {{ attribute.reference.alias }}
-              </span>
-              <span class="badge bg-danger" v-else>
-                ОШИБКА ТИП КОНТЕНТА НЕ НАЙДЕН
-              </span>
-            </template>
-
-
-          </div>
-        </div>
-        <span class="badge bg-light text-dark rounded-pill">{{ contentType.alias }}</span>
-      </li>
-    </ul>
-
-
-  </div>
-</template>
-
-<style>
-
+.active {
+  border-radius: 5px;
+  color: rgb(102, 99, 253);
+  background-color: rgb(242, 241, 255);
+  border-color: transparent;
+}
 </style>

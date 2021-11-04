@@ -12,17 +12,22 @@ export async function seed() {
                 new AttributeType({
                     title: 'Заголовок',
                     alias: 'title',
-                    type: 'text',
+                    type: 'string',
+                }),
+                new AttributeType({
+                    title: 'Алиас',
+                    alias: 'slug',
+                    type: 'string',
                 }),
                 new AttributeType({
                     title: 'Картинка для заголовка',
                     alias: 'titleImage',
-                    type: 'image',
+                    type: 'asset',
                 }),
                 new AttributeType({
                     title: 'Иконка',
                     alias: 'iconImage',
-                    type: 'image',
+                    type: 'asset',
                 }),
                 new AttributeType({
                     title: 'Краткое описание',
@@ -52,7 +57,7 @@ export async function seed() {
                     title: 'Спонсоры раздела',
                     alias: 'sponsors',
                     type: 'collection',
-                    reference: 'company1'
+                    reference: 'company'
                 }),
             ],
         },

@@ -1,6 +1,7 @@
 <template>
   <div>
-    <p>{{ msg }}</p>
+    <h1>Hello</h1>
+    <p>{{ id }}</p>
   </div>
 </template>
 
@@ -8,7 +9,7 @@
 export default {
   name: 'HelloWorld',
   props: {
-    msg: String
+    id: String
   }
 }
 </script>

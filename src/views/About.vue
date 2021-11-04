@@ -1131,7 +1131,7 @@ export default {
     chapterEnergy.type = chapterType;
     chapterEnergy.attributes.push(articleGroupsField)
 
-    console.log(chapterEnergy)
+    console.log('срфзеукУтукпн', chapterEnergy)
   },
   methods: {
     isActive(menuItem) {
@@ -1142,6 +1142,7 @@ export default {
     }
   }
 }
+import '@/assets/layout.css';
 </script>
 
 <style>
