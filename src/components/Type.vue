@@ -5,6 +5,9 @@
       <div class="col-12 mb-4">
         <h2 class="fw-light">Моделирование</h2>
       </div>
+
+      <button class="btn btn-lg btn-outline-primary" v-if="contentTypes.length === 0" @click="seed()">Загрузить демо </button>
+
       <div class="col-2">
         <div class="list-group list-group-flush">
           <router-link active-class="active" class="list-group-item list-group-item-action" v-for="contentType in contentTypes"
@@ -27,7 +30,7 @@ import {seed} from '@/stubs'
 import {useStore} from "vuex";
 import {computed} from "vue";
 
-seed()
+//
 export default {
   name: 'Type',
   setup() {
@@ -35,6 +38,11 @@ export default {
     store.dispatch('fetchContentTypes')
     return {
       contentTypes: computed(() => store.state.contentTypes)
+    }
+  },
+  methods: {
+    seed(){
+      seed()
     }
   }
 }

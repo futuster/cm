@@ -137,6 +137,7 @@ export async function seed() {
             alias: 'user',
             attributes: []
         }
-    ]);
+    ])
 
+    document.location.reload()
 }
