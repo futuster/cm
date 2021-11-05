@@ -70,7 +70,7 @@ import {HandleDirective, SlickItem, SlickList} from 'vue-slicksort';
 import StringType from "@/components/dynamicRenderer/StringType";
 import TextType from "@/components/dynamicRenderer/TextType";
 import NumberType from "@/components/dynamicRenderer/NumberType";
-import DynamicRenderer from "@/components/dynamicRenderer/DynamicRenderer";
+
 
 
 const attributeTypes = {
@@ -84,7 +84,6 @@ export default {
   components: {
     SlickList,
     SlickItem,
-    DynamicRenderer,
   },
   directives: {
     HandleDirective
