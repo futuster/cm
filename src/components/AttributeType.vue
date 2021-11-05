@@ -12,7 +12,7 @@
         <small class="fw-light">{{attribute.help}}</small>
         <div class="mb-1">
 
-          <template class="col-md-4" v-if="attribute.type === 'collection'">
+          <template class="col-md-4" v-if="attribute.type === 'reference'">
             <span class="badge bg-secondary">{{ attribute.reference.title }}</span>
             <template v-if="!attribute.reference.alias">
               <div class="badge fs-6 bg-danger">ОШИБКА!</div><br> Тип контента `<span class="text-warning">{{ attribute.reference }}</span>` не найден

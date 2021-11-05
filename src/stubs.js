@@ -44,19 +44,19 @@ export async function seed() {
                 new AttributeType({
                     title: 'Группы статей',
                     alias: 'articleGroupList',
-                    type: 'collection',
+                    type: 'reference',
                     reference: 'groupArticle'
                 }),
                 new AttributeType({
                     title: 'Авторы',
                     alias: 'authors',
-                    type: 'collection',
+                    type: 'reference',
                     reference: 'user'
                 }),
                 new AttributeType({
                     title: 'Спонсоры раздела',
                     alias: 'sponsors',
-                    type: 'collection',
+                    type: 'reference',
                     reference: 'company'
                 }),
             ],

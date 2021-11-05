@@ -24,7 +24,7 @@ const routes = [
                 children: [
 
                     {
-                        path: ':attribute/',
+                        path: ':attributeId/',
                         name: 'attributeEdit',
                         component: ContentType,
                         props: true,

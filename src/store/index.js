@@ -8,12 +8,18 @@ export default createStore({
     mutations: {
         updateAttribute(state, {attribute, contentType}) {
             const type = state.contentTypes.find(ct => ct.alias === contentType.alias)
+            let attributeWasFinded = false
             type.attributes = type.attributes.map(attr => {
                 if (attr.alias === attribute.alias) {
+                    attributeWasFinded = true
                     return attribute
                 }
                 return attr
             })
+            if(!attributeWasFinded){
+                type.attributes.push(attribute)
+            }
+
             const types = state.contentTypes.map(ct => {
                 if (ct.alias === contentType.alias) {
                     return type
@@ -40,21 +46,7 @@ export default createStore({
 
             const contentTypes = await contentTypeProvider.list()
 
-
-            commit('setContentTypes', contentTypes.map(contentType => {
-
-                contentType.attributes = contentType.attributes.map(attr => {
-
-                    if (attr.type === 'collection') {
-
-                        attr.reference = contentTypes.find(ct => ct.alias === attr.reference.alias) || attr.reference
-                    }
-
-                    return attr
-                })
-
-                return contentType
-            }))
+            commit('setContentTypes', contentTypes)
         }
     }
 })

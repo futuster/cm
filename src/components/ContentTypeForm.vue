@@ -21,12 +21,12 @@
           <div class="col-md-4">
             <label class="form-label">Тип поля</label>
             <select v-model="attribute.type" class="form-select form-select-sm">
-              <option v-for="option in ['text', 'number', 'collection', 'asset', 'image']" v-bind:key="option" :value="option">
+              <option v-for="option in ['text', 'number', 'reference', 'asset', 'image']" v-bind:key="option" :value="option">
                 {{ option }}
               </option>
             </select>
           </div>
-          <div class="col-md-4" v-if="attribute.type === 'collection'">
+          <div class="col-md-4" v-if="attribute.type === 'reference'">
             <label class="form-label">Тип контента</label>
             <select v-bind:disabled="!attribute.reference.alias" v-model="attribute.reference" class="form-select form-select-sm">
               <option v-for="ct in contentTypes" v-bind:key="ct.alias" :value="ct">
@@ -34,7 +34,7 @@
               </option>
             </select>
 
-            <span v-if="!attribute.reference.alias">
+            <span v-if="!attribute.reference">
                     <h6 class="badge bg-danger">ОШИБКА!</h6><br> Тип контента `<span class="text-warning">{{ attribute.reference }}</span>` не найден
                   </span>
           </div>
