@@ -33,13 +33,32 @@ export default {
   },
   setup() {
     const store = useStore()
+
+
     store.dispatch('fetchContentTypes')
+
+
     return {
-      contentTypes: computed(() => store.state.contentTypes || [])
+      contentTypes: computed(() => store.state.contentTypes || []),
+
     }
-  }
+  },
+  methods: {}
 }
 </script>
 <style scoped>
+.list-group-flush {
+  border-color: transparent;
+}
 
+.list-group-item-action {
+  border-color: transparent;
+  border-radius: 5px;
+}
+
+.active {
+  color: rgb(102, 99, 253);
+  background-color: rgb(242, 241, 255);
+  border-color: transparent;
+}
 </style>

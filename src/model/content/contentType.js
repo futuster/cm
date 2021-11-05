@@ -5,8 +5,8 @@ class ContentType {
 }
 
 class Content {
+    id;
     title;
-    alias;
     type;
     attributes = [];
     // .get('articleGroups')

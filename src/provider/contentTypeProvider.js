@@ -12,7 +12,7 @@ export class ContentTypeProvider {
         try {
             return await this.storage.getItem(this.key);
         } catch (err) {
-            console.error('pewpepwep', err);
+            console.error('ContentTypeProvider Error', err);
         }
     }
 
@@ -23,7 +23,7 @@ export class ContentTypeProvider {
                 return await this.doSave(contentType)
             }
         } catch (err) {
-            console.error('pewpepwep', err);
+            console.error('ContentTypeProvider Error', err);
         }
         return await this.storage.setItem(this.key, contentType)
     }
@@ -31,9 +31,9 @@ export class ContentTypeProvider {
     async doSave(contentType) {
         try {
             const value = await this.storage.setItem(this.key, contentType);
-            console.log('set', value);
+            console.log('ContentTypeProvider::doSave', value);
         } catch (err) {
-            console.error('pewpepwep', err);
+            console.error('ContentTypeProvider Error', err);
         }
     }
 }

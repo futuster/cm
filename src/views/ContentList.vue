@@ -1,34 +1,20 @@
 <template>
   <div>
-    <h2 class="fw-light mb-4"> {{ contentType.title }} <sup class="fs-6 fw-lighter text-muted">#{{ contentType.alias }}</sup></h2>
+    <h2 class="fw-light mb-4">{{ contentType.title }} <sup class="fs-6 fw-lighter text-muted">#{{ contentType.alias }}</sup></h2>
     <div class="list-group">
 
-      <SlickList :useDragHandle="true" axis="y" lockAxis="y" v-model:list="contentType.attributes">
-        <SlickItem v-for="(attribute, i) in []"
-                   v-bind:key="attribute.alias" :index="i">
+      <SlickList :useDragHandle="true" axis="y" lockAxis="y" v-model:list="contentList">
+        <SlickItem v-for="(content, i) in contentList"
+                   v-bind:key="content.id" :index="i">
 
-          <router-link :to="{ name: 'attributeEdit', params: {id: id, attributeId: attribute.alias } }"
+          <router-link :to="{ name: 'contentEdit', params: {contentId: content.id, contentTypeAlias: content.type } }"
                        class="list-group-item list-group-item-action d-flex gap-2" aria-current="true">
 
             <span v-handle-directive class="handle mt-1 flex-shrink-0 "></span>
             <div class="d-flex flex-wrap flex-grow-1 justify-content-between">
-              <h6 class="mb-0 ">{{ attribute.title }}</h6>
-              <small class="text-muted ">#{{ attribute.alias }}</small>
-              <div class="w-100">
-                <small class="fw-light">{{ attribute.help }}</small>
-                <div class="mb-1 d-block">
-                  <template class="col-md-4" v-if="attribute.type === 'reference'">
-                    <span class="badge bg-secondary">{{ attribute.reference }}</span>
-                    <template v-if="!attribute.reference">
-                      <div class="badge fs-6 bg-danger">ОШИБКА!</div>
-                      <br> Тип контента `<span class="text-warning">{{ attribute.reference }}</span>` не найден
-                    </template>
-                  </template>
-                  <template v-else>
-                    <span class="badge bg-secondary">{{ attribute.type }}</span>
-                  </template>
-                </div>
-              </div>
+              <h6 class="mb-0 ">{{ content.title }}{{ content.attributes.find(a => a.type === 'title')?.value }}</h6>
+              <small class="text-muted ">#{{ content.type }}</small>
+
             </div>
 
 
@@ -40,14 +26,14 @@
       <button class="btn btn-primary mt-3">Добавить</button>
     </div>
 
-    <form>
+    <form @submit="save">
 
       <div class="mb-3" v-for="(attribute, index) in contentType.attributes" v-bind:key="attribute.alias">
 
         <component
             :key="index"
             :is="getType(attribute.type)"
-            :value="data[attribute.alias]"
+            :value="data.attributes.find(a => a.type === attribute.alias)?.value"
             @input="updateData(attribute.alias, $event)"
             v-bind="attribute"
             :data="data"
@@ -55,12 +41,13 @@
         </component>
       </div>
 
+      <div class="mb-3">
+        <button class="btn btn-primary">Сохранить</button>
+      </div>
+
     </form>
 
-
   </div>
-
-
 </template>
 <script>
 
@@ -70,7 +57,8 @@ import {HandleDirective, SlickItem, SlickList} from 'vue-slicksort';
 import StringType from "@/components/dynamicRenderer/StringType";
 import TextType from "@/components/dynamicRenderer/TextType";
 import NumberType from "@/components/dynamicRenderer/NumberType";
-
+import {ContentProvider} from "@/provider/contentProvider";
+import {AttributeValue} from "@/model/content/contentType";
 
 
 const attributeTypes = {
@@ -94,7 +82,18 @@ export default {
   },
   data() {
     return {
-      data: {},
+      data: {
+        attributes: [],
+        type: this.contentTypeAlias
+      },
+      contentList: [
+        {
+          id: 1,
+          title: 'pewpew',
+          type: 'article',
+          attributes: []
+        }
+      ]
     }
   },
   setup(props) {
@@ -109,13 +108,48 @@ export default {
       }),
     }
   },
+  watch: {
+    async contentId(value) {
+      console.log('watch', value)
+      if (value) {
+
+        const contentProvider = new ContentProvider()
+        const list = await contentProvider.all(this.contentTypeAlias)
+        this.data = list.find(c => c.id === value)
+      }
+    }
+  },
+  async mounted() {
+    const contentProvider = new ContentProvider()
+    this.contentList = await contentProvider.all(this.contentTypeAlias)
+  },
   methods: {
     getType(typeKey) {
       return attributeTypes[typeKey] || StringType
     },
-    updateData(e) {
-      console.log('updateData', e)
+    updateData(type, event) {
+      let attribute = this.data.attributes.find(a => a.type === type)
+
+      const data = this.data;
+
+      if (!attribute) {
+        attribute = new AttributeValue()
+        attribute.value = event.target.value
+        attribute.type = type
+        data.attributes.push(attribute)
+      } else {
+        data.attributes = this.data.attributes.map(a => a.type === type ? {value: event.target.value, type} : a)
+
+      }
+
+      this.data = data;
     },
+    save(e) {
+      e.preventDefault()
+      const contentProvider = new ContentProvider()
+      console.log('save', contentProvider.create(this.data))
+      // contentProvider.save(this.contentTypeAlias, this.data)
+    }
   }
 }
 </script>

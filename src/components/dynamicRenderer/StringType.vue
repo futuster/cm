@@ -2,6 +2,7 @@
   <div>
     <label class="form-label">{{ title }}</label>
     <input type="text" :value="value" @input="$emit('input', $event)" class="form-control form-control-sm">
+    <div class="form-text" v-if="help">{{help}}</div>
   </div>
 
 
@@ -10,7 +11,7 @@
 <script>
 export default {
   name: "StringType",
-  props: ["title", "value"],
+  props: ["title", "help", "value"],
   emits: ["input"],
 };
 </script>

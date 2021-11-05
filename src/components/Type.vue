@@ -6,7 +6,19 @@
         <h2 class="fw-light">Моделирование</h2>
       </div>
 
-      <button class="btn btn-lg btn-outline-primary" v-if="contentTypes.length === 0" @click="seed()">Загрузить демо</button>
+      <div v-if="contentTypes.length === 0 && isFresh">
+
+        <figure class="text-center my-5 py-5">
+          <blockquote class="blockquote">
+            <p>Свято место пусто не бывает.</p>
+          </blockquote>
+          <figcaption class="blockquote-footer">
+            <cite>Устойчивое сочетание</cite>
+          </figcaption>
+        </figure>
+
+      </div>
+      <button class="btn btn-lg btn-outline-primary" v-if="contentTypes.length === 0 && isFresh" @click="seed()">Загрузить демо</button>
 
       <div class="col-2">
         <div class="list-group list-group-flush">
@@ -15,6 +27,8 @@
                        :to="{ name: 'contentTypeEdit', params: { id: contentType.alias }}">
             {{ contentType.title }}
           </router-link>
+          <hr v-if="contentTypes.length > 0 && isFresh" />
+          <button class=" btn btn-outline-danger" @click="removeAll" v-if="contentTypes.length > 0 && isFresh">Удалить всё</button>
         </div>
       </div>
       <div class="col-10">
@@ -28,18 +42,29 @@
 import {useStore} from "vuex";
 import {computed} from "vue";
 import {seed} from '@/stubs'
+import {ContentTypeProvider} from "@/provider/contentTypeProvider";
 
 export default {
   name: 'Type',
   setup() {
     const store = useStore()
     store.dispatch('fetchContentTypes')
+
     return {
-      contentTypes: computed(() => store.state.contentTypes || [])
+      contentTypes: computed(() => store.state.contentTypes || []),
+      isFresh: computed(() => store.state.isFresh),
     }
   },
   methods: {
-    seed
+    seed,
+    async removeAll() {
+      if (confirm('Are you sure?')) {
+        const contentTypeProvider = new ContentTypeProvider()
+        await contentTypeProvider.save([])
+        document.location.reload()
+      }
+
+    }
   }
 }
 </script>

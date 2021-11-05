@@ -13,11 +13,11 @@
                 Главная
               </router-link>
             </li>
-            <li>
-              <router-link to="/chapters/" class="nav-link">
-                Верстка
-              </router-link>
-            </li>
+<!--            <li>-->
+<!--              <router-link to="/chapters/" class="nav-link">-->
+<!--                Верстка-->
+<!--              </router-link>-->
+<!--            </li>-->
             <li>
               <router-link to="/type/" class="nav-link">
                 Типы контента
@@ -49,6 +49,5 @@ header .nav-link:hover {
 a.nav-link.router-link-active, a.nav-link.router-link-active:active {
   color: #FFF;
 }
-
 
 </style>

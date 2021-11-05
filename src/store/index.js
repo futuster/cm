@@ -3,7 +3,8 @@ import {ContentTypeProvider} from "@/provider/contentTypeProvider";
 
 export default createStore({
     state: {
-        contentTypes: []
+        contentTypes: [],
+        isFresh: false,
     },
     mutations: {
         updateAttribute(state, {attribute, contentType}) {
@@ -34,6 +35,10 @@ export default createStore({
         },
         async setContentTypes(state, types) {
             state.contentTypes = types
+            this.commit('setIsFresh', true)
+        },
+        setIsFresh(state, value){
+            state.isFresh = !!value
         }
     },
     actions: {

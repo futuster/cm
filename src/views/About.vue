@@ -1142,10 +1142,11 @@ export default {
     }
   }
 }
-import '@/assets/layout.css';
+
 </script>
 
-<style>
+<style scoped>
+@import "~@/assets/layout.css";
 .content-title-wrapper {
   background: url('~@/assets/title-test.jpg') no-repeat 50%
 }
