@@ -68,7 +68,7 @@ export async function seed() {
                 new AttributeType({
                     title: 'Заголовок',
                     alias: 'title',
-                    type: 'text',
+                    type: 'string',
                 }),
                 new AttributeType({
                     title: 'Картинка для заголовка',
@@ -101,7 +101,7 @@ export async function seed() {
                 new AttributeType({
                     title: 'Заголовок',
                     alias: 'title',
-                    type: 'text',
+                    type: 'string',
                 }),
                 new AttributeType({
                     title: 'Картинка для заголовка',

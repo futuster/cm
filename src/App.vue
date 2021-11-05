@@ -23,6 +23,11 @@
                 Типы контента
               </router-link>
             </li>
+            <li>
+              <router-link to="/content/" class="nav-link">
+                Контент
+              </router-link>
+            </li>
           </ul>
         </div>
       </div>

@@ -3,6 +3,8 @@ import Home from '../views/Home.vue'
 import Chapter from '../views/Chapter.vue'
 import Type from '../components/Type.vue'
 import ContentType from "@/components/ContentType";
+import ContentList from "@/views/ContentList";
+import Content from "@/views/Content";
 
 
 const routes = [
@@ -22,7 +24,6 @@ const routes = [
                 component: ContentType,
                 props: true,
                 children: [
-
                     {
                         path: ':attributeId/',
                         name: 'attributeEdit',
@@ -32,6 +33,34 @@ const routes = [
                 ]
             },
         ]
+    },
+    {
+        path: '/content/',
+        name: 'contentIndex',
+        component: Content,
+        props: true,
+        children: [
+            {
+                path: ':contentTypeAlias/',
+                name: 'contentList',
+                component:  ContentList,
+                props: true,
+                children: [
+                    {
+                        path: 'create/',
+                        name: 'contentCreate',
+                        component:  ContentList,
+                        props: true
+                    },
+                    {
+                        path: ':contentId/',
+                        name: 'contentEdit',
+                        component:  ContentList,
+                        props: true
+                    }
+                ]
+            },
+        ],
     },
     {
         path: '/chapters/',
