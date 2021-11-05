@@ -55,10 +55,11 @@ export default {
 
 .list-group-item-action {
   border-color: transparent;
+  border-radius: 5px;
 }
 
 .active {
-  border-radius: 5px;
+
   color: rgb(102, 99, 253);
   background-color: rgb(242, 241, 255);
   border-color: transparent;
