@@ -20,8 +20,8 @@
       </div>
       <button class="btn btn-lg btn-outline-primary" v-if="contentTypes.length === 0 && isFresh" @click="seed()">Загрузить демо</button>
 
-      <div class="col-2 d-sm-none d-md-block">
-        <div class="list-group list-group-flush">
+      <div class="col-12 col-md-4 col-xl-2">
+        <div class="list-group list-group-flush mb-5">
           <router-link active-class="active" class="list-group-item list-group-item-action" v-for="contentType in contentTypes"
                        v-bind:key="contentType.alias"
                        :to="{ name: 'contentTypeEdit', params: { id: contentType.alias }}">
@@ -31,7 +31,7 @@
           <button class=" btn btn-outline-danger" @click="removeAll" v-if="contentTypes.length > 0 && isFresh">Удалить всё</button>
         </div>
       </div>
-      <div class="col-10">
+      <div class="col-12 col-md-8  col-xl-10">
         <router-view></router-view>
       </div>
     </div>

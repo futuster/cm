@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h2 class="fw-light mb-4"> {{ contentType.title }} <sup class="fs-6 fw-lighter text-muted">#{{ contentType.alias }}</sup></h2>
+    <h3 class="fw-light mb-4"> {{ contentType.title }} <sup class="fs-6 fw-lighter text-muted">#{{ contentType.alias }}</sup></h3>
     <div class="list-group">
 
       <SlickList :useDragHandle="true" axis="y" lockAxis="y" v-model:list="contentType.attributes">
