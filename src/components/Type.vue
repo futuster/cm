@@ -20,7 +20,7 @@
       </div>
       <button class="btn btn-lg btn-outline-primary" v-if="contentTypes.length === 0 && isFresh" @click="seed()">Загрузить демо</button>
 
-      <div class="col-2">
+      <div class="col-2 d-sm-none d-md-block">
         <div class="list-group list-group-flush">
           <router-link active-class="active" class="list-group-item list-group-item-action" v-for="contentType in contentTypes"
                        v-bind:key="contentType.alias"

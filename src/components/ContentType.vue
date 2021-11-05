@@ -5,7 +5,7 @@
 
       <SlickList :useDragHandle="true" axis="y" lockAxis="y" v-model:list="contentType.attributes">
         <SlickItem v-for="(attribute, i) in contentType.attributes"
-                   v-bind:key="attribute.alias" :index="i">
+                   v-bind:key="attribute.alias" :index="i" class="list-item-wrapper">
 
           <router-link :to="{ name: 'attributeEdit', params: {id: id, attributeId: attribute.alias } }"
                        class="list-group-item list-group-item-action d-flex gap-2" aria-current="true">
@@ -221,5 +221,9 @@ export default {
   border-color: rgb(240, 242, 247);
   box-shadow: 0 2px 6px rgba(0,0,0,.1);
   padding: .8rem 1rem;
+}
+
+.list-item-wrapper {
+  padding-bottom: 5px;
 }
 </style>
