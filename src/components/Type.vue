@@ -37,7 +37,7 @@ export default {
     const store = useStore()
     store.dispatch('fetchContentTypes')
     return {
-      contentTypes: computed(() => store.state.contentTypes)
+      contentTypes: computed(() => store.state.contentTypes || [])
     }
   },
   methods: {
