@@ -1,7 +1,8 @@
 <template>
-  <div class="container">
-    <label>{{ title }}</label>
-    <input :value="value" @input="$emit('input', $event)" />
+  <div>
+    <label class="form-label">{{ title }}</label>
+    <input type="number" :value="value" @input="$emit('input', $event)" class="form-control form-control-sm">
+    <div class="form-text" v-if="help">{{help}}</div>
   </div>
 </template>
 
