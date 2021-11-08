@@ -52,7 +52,7 @@
 <script>
 
 import {useStore} from "vuex";
-import {computed} from "vue";
+import {computed, onMounted, reactive} from "vue";
 import {HandleDirective, SlickItem, SlickList} from 'vue-slicksort';
 import StringType from "@/components/dynamicRenderer/StringType";
 import TextType from "@/components/dynamicRenderer/TextType";
@@ -68,7 +68,7 @@ const attributeTypes = {
 };
 
 export default {
-  name: 'ContentList',
+  name: 'ContentListPage',
   components: {
     SlickList,
     SlickItem,
@@ -80,25 +80,36 @@ export default {
     contentTypeAlias: String,
     contentId: String
   },
+
   data() {
     return {
       data: {
         attributes: [],
         type: this.contentTypeAlias
       },
-      contentList: [
-        {
-          id: 1,
-          title: 'pewpew',
-          type: 'article',
-          attributes: []
-        }
-      ]
+
+    }
+  },
+  watch:{
+    contentId(){
+
     }
   },
   setup(props) {
     const store = useStore()
-    store.dispatch('fetchContentTypes')
+    let contentList = reactive([
+
+    ])
+
+    onMounted(async () => {
+      store.dispatch('fetchContentTypes')
+      const contentProvider = new ContentProvider()
+      console.log('fetch all', props.contentTypeAlias)
+      contentList.value = await contentProvider.all(props.contentTypeAlias)
+
+    })
+
+
     return {
       contentTypes: computed(() => store.state.contentTypes || []),
       contentType: computed(() => store.state.contentTypes.find(t => t.alias === props.contentTypeAlias) || {
@@ -106,22 +117,8 @@ export default {
         alias: props.id,
         attributes: []
       }),
+      contentList
     }
-  },
-  watch: {
-    async contentId(value) {
-      console.log('watch', value)
-      if (value) {
-
-        const contentProvider = new ContentProvider()
-        const list = await contentProvider.all(this.contentTypeAlias)
-        this.data = list.find(c => c.id === value)
-      }
-    }
-  },
-  async mounted() {
-    const contentProvider = new ContentProvider()
-    this.contentList = await contentProvider.all(this.contentTypeAlias)
   },
   methods: {
     getType(typeKey) {

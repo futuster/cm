@@ -1,33 +1,34 @@
 import {createRouter, createWebHistory} from 'vue-router'
-import Home from '../views/Home.vue'
-import Chapter from '../views/Chapter.vue'
-import Type from '../components/Type.vue'
-import ContentType from "@/components/ContentType";
-import ContentList from "@/views/ContentList";
-import Content from "@/views/Content";
+
+import MainPage from "@/views/MainPage";
+import ContentTypeListPage from '@/views/ContentTypeListPage.vue'
+import ContentTypePage from "@/views/ContentTypePage";
+import ContentListPage from "@/views/ContentListPage";
+import ContentPage from "@/views/ContentPage";
+import SettingsPage from "@/views/SettingsPage";
 
 
 const routes = [
     {
         path: '/',
-        name: 'Home',
-        component: Home
+        name: 'Main',
+        component: MainPage
     },
     {
         path: '/type/',
         name: 'Type',
-        component: Type,
+        component: ContentTypeListPage,
         children: [
             {
-                path: ':id/',
+                path: ':contentTypeId/',
                 name: 'contentTypeEdit',
-                component: ContentType,
+                component: ContentTypePage,
                 props: true,
                 children: [
                     {
                         path: ':attributeId/',
                         name: 'attributeEdit',
-                        component: ContentType,
+                        component: ContentTypePage,
                         props: true,
                     }
                 ]
@@ -37,43 +38,36 @@ const routes = [
     {
         path: '/content/',
         name: 'contentIndex',
-        component: Content,
+        component: ContentPage,
         props: true,
         children: [
             {
                 path: ':contentTypeAlias/',
                 name: 'contentList',
-                component:  ContentList,
+                component: ContentListPage,
                 props: true,
                 children: [
                     {
                         path: 'create/',
                         name: 'contentCreate',
-                        component:  ContentList,
+                        component: ContentListPage,
                         props: true
                     },
                     {
                         path: ':contentId/',
                         name: 'contentEdit',
-                        component:  ContentList,
+                        component: ContentListPage,
                         props: true
                     }
                 ]
             },
         ],
     },
+
     {
-        path: '/chapters/',
-        name: 'ChapterList',
-        // route level code-splitting
-        // this generates a separate chunk (about.[hash].js) for this route
-        // which is lazy-loaded when the route is visited.
-        component: () => import(/* webpackChunkName: "about" */ '../views/About.vue'),
-    },
-    {
-        path: '/chapters/:slug/',
-        name: 'Chapter',
-        component: Chapter
+        path: '/settings/',
+        name: 'settings',
+        component: SettingsPage
     }
 ]
 

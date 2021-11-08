@@ -7,7 +7,7 @@
         <SlickItem v-for="(attribute, i) in contentType.attributes"
                    v-bind:key="attribute.alias" :index="i" class="list-item-wrapper">
 
-          <router-link :to="{ name: 'attributeEdit', params: {id: id, attributeId: attribute.alias } }"
+          <router-link :to="{ name: 'attributeEdit', params: {contentTypeId: contentType.alias, attributeId: attribute.alias } }"
                        class="list-group-item list-group-item-action d-flex gap-2" aria-current="true">
 
             <span v-handle-directive class="handle mt-1 flex-shrink-0 "></span>
@@ -38,7 +38,7 @@
       </SlickList>
     </div>
     <div class="mb-5">
-    <button class="btn btn-primary mt-3" @click="modalOpen = true">Добавить</button>
+      <button class="btn btn-primary mt-3" @click="modalOpen = true">Добавить</button>
     </div>
   </div>
 
@@ -101,7 +101,7 @@ import {computed} from 'vue'
 import {HandleDirective, SlickItem, SlickList} from 'vue-slicksort';
 
 export default {
-  name: 'ContentType',
+  name: 'ContentTypePage',
   components: {
     SlickList,
     SlickItem,
@@ -110,7 +110,7 @@ export default {
     HandleDirective
   },
   props: {
-    id: String,
+    contentTypeId: String,
     attributeId: String
   },
   setup(props) {
@@ -119,7 +119,7 @@ export default {
 
     return {
       contentTypes: computed(() => store.state.contentTypes),
-      contentType: computed(() => store.state.contentTypes.find(t => t.alias === props.id) || {title: '', alias: props.id, attributes: []}),
+      contentType: computed(() => store.state.contentTypes.find(t => t.alias === props.contentTypeId) || {title: '', alias: props.contentTypeId, attributes: []}),
     }
   },
   data() {
@@ -132,7 +132,7 @@ export default {
   methods: {
     close() {
       this.modalOpen = false;
-      this.$router.push({name: 'contentTypeEdit', params: {id: this.id}})
+      this.$router.push({name: 'contentTypeEdit', params: {contentTypeId: this.contentTypeId}})
       this.attr = {}
     },
 
@@ -150,7 +150,7 @@ export default {
         return
       }
       this.modalOpen = true
-      this.attr = Object.assign({}, this.contentTypes.find(t => t.alias === this.id).attributes.find(attr => attr.alias === this.attributeId))
+      this.attr = Object.assign({}, this.contentTypes.find(t => t.alias === this.contentTypeId).attributes.find(attr => attr.alias === this.attributeId))
     }
   }
 }
