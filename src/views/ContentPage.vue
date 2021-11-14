@@ -26,7 +26,7 @@ import {useStore} from "vuex";
 import {computed} from "vue";
 
 export default {
-  name: 'Content',
+  name: 'ContentPage',
   props: {
     contentTypeAlias: String,
     contentId: String

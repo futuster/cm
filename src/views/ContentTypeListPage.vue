@@ -24,7 +24,7 @@
         <div class="list-group list-group-flush mb-5">
           <router-link active-class="active" class="list-group-item list-group-item-action" v-for="contentType in contentTypes"
                        v-bind:key="contentType.alias"
-                       :to="{ name: 'contentTypeEdit', params: { id: contentType.alias }}">
+                       :to="{ name: 'contentTypeEdit', params: { contentTypeId: contentType.alias }}">
             {{ contentType.title }}
           </router-link>
           <hr v-if="contentTypes.length > 0 && isFresh" />
@@ -45,7 +45,7 @@ import {seed} from '@/stubs'
 import {ContentTypeProvider} from "@/provider/contentTypeProvider";
 
 export default {
-  name: 'Type',
+  name: 'ContentTypeListPag',
   setup() {
     const store = useStore()
     store.dispatch('fetchContentTypes')
